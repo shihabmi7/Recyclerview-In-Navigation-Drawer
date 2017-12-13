@@ -25,19 +25,19 @@
             android:paddingTop="10dp"
             android:text="Title"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/toolbar_ivNavigation"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_subject_black_24dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
             android:background="@drawable/selector_view"
-            />
+            android:padding="10dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <!--android:layout_alignParentRight="true"-->
 
     </RelativeLayout>
 

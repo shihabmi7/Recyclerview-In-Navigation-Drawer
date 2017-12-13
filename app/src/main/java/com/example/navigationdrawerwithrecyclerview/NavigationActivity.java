@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static android.view.Gravity.RIGHT;
+import static android.view.Gravity.LEFT;
 
 
 /*
@@ -95,16 +95,16 @@ public class NavigationActivity extends AppCompatActivity implements INavigation
     @SuppressLint("RtlHardcoded")
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(RIGHT)) {
-            drawer.closeDrawer(RIGHT);
+        if (drawer.isDrawerOpen(LEFT)) {
+            drawer.closeDrawer(LEFT);
         } else {
             super.onBackPressed();
         }
     }
 
     private void openCloseDrawer() {
-        if (drawer.isDrawerOpen(RIGHT)) drawer.closeDrawer(RIGHT);
-        else drawer.openDrawer(RIGHT);
+        if (drawer.isDrawerOpen(LEFT)) drawer.closeDrawer(LEFT);
+        else drawer.openDrawer(LEFT);
     }
 
     public void replaceNavigationFragment() {
@@ -163,7 +163,7 @@ public class NavigationActivity extends AppCompatActivity implements INavigation
     }
 
     public void closeNavigationDrawer() {
-        if (drawer.isDrawerOpen(RIGHT)) drawer.closeDrawer(RIGHT);
+        if (drawer.isDrawerOpen(LEFT)) drawer.closeDrawer(LEFT);
     }
 
     @Override
