@@ -8,10 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.navigationdrawerwithrecyclerview.adapter.INavigation;
+import com.example.navigationdrawerwithrecyclerview.adapter.NavigationAdapter;
 import com.example.navigationdrawerwithrecyclerview.constants.Constants;
 import com.example.navigationdrawerwithrecyclerview.fragment.AboutFragment;
 import com.example.navigationdrawerwithrecyclerview.fragment.FeedsFragment;
@@ -20,6 +24,9 @@ import com.example.navigationdrawerwithrecyclerview.fragment.NewsFragment;
 import com.example.navigationdrawerwithrecyclerview.fragment.PopularTagsFragment;
 import com.example.navigationdrawerwithrecyclerview.fragment.SettingsFragment;
 import com.example.navigationdrawerwithrecyclerview.fragment.WatchLiveFragment;
+import com.example.navigationdrawerwithrecyclerview.model.NavigationData;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,19 +41,31 @@ import static android.view.Gravity.RIGHT;
 * By - dnitinverma
 * */
 
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements INavigation {
 
     DrawerLayout drawer;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_ivNavigation) ImageView toolbar_ivNavigation;
-    @BindView(R.id.toolbar_tvTitle) TextView tvTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_ivNavigation)
+    ImageView toolbar_ivNavigation;
+    @BindView(R.id.toolbar_tvTitle)
+    TextView tvTitle;
 
-    @OnClick(R.id.toolbar_ivNavigation) void onClickNavigation() {
+    @OnClick(R.id.toolbar_ivNavigation)
+    void onClickNavigation() {
         openCloseDrawer();
     }
 
     Unbinder unbinder;
+
+    @BindView(R.id.rvNavigation)
+    RecyclerView rvNavigation;
+
+    private NavigationAdapter adapter;
+
+    private int array_icons[] = {R.drawable.icon_menu_news, R.drawable.icon_menu_feeds, R.drawable.icon_menu_watchlive, R.drawable.icon_menu_popular_tags, R.drawable.icon_menu_settings, R.drawable.icon_menu_about};
+
 
     @SuppressWarnings("deprecation")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -67,7 +86,10 @@ public class NavigationActivity extends AppCompatActivity {
         toggle.syncState();
 
         replaceFragment(0);
-        replaceNavigationFragment();
+        //replaceNavigationFragment();
+
+
+        setAdapter();
     }
 
     @SuppressLint("RtlHardcoded")
@@ -75,8 +97,7 @@ public class NavigationActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawer.isDrawerOpen(RIGHT)) {
             drawer.closeDrawer(RIGHT);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -123,14 +144,14 @@ public class NavigationActivity extends AppCompatActivity {
                 break;
         }
 
-        replaceFragment(fragment,tag);
+        replaceFragment(fragment, tag);
 
     }
 
     public void replaceFragment(Fragment fragment, String tag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flContainerFragment, fragment,tag)
+                .replace(R.id.flContainerFragment, fragment, tag)
                 .commit();
 
         setToolbarTitle(tag);
@@ -150,4 +171,41 @@ public class NavigationActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
     }
+
+    private ArrayList<NavigationData> fillData() {
+        ArrayList<NavigationData> navigationDataArrayList = new ArrayList<>();
+        String array_navigation[] = getResources().getStringArray(R.array.array_navigation);
+
+        for (int i = 0; i < array_navigation.length; i++) {
+            NavigationData navigationData = new NavigationData();
+            navigationData.setName(array_navigation[i]);
+            navigationData.setDrawableId(array_icons[i]);
+            navigationDataArrayList.add(navigationData);
+        }
+
+        return navigationDataArrayList;
+    }
+
+    private void setAdapter() {
+        adapter = new NavigationAdapter(this, fillData());
+        rvNavigation.setLayoutManager(new LinearLayoutManager(this));
+        rvNavigation.setAdapter(adapter);
+
+        adapter.setSelected(0);
+        //adapter.refreshAdapter(fillData());
+    }
+
+    @Override
+    public void onViewClick(int position) {
+
+        replaceFragment(position);
+        adapter.setSelected(position);
+    }
+
+    @Override
+    public void onIconClick(int position) {
+        replaceFragment(position);
+        adapter.setSelected(position);
+    }
+
 }

@@ -20,23 +20,32 @@ import butterknife.OnClick;
 
 public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.ViewHolder> {
 
-    private List<NavigationData> navigationDatas;
+    private List<NavigationData> navigationDatas = new ArrayList<>();
     private INavigation listener;
 
-    public NavigationAdapter(INavigation listener) {
-        navigationDatas = new ArrayList<>();
+    public NavigationAdapter(INavigation listener, List<NavigationData> navigationDatas) {
+        this.navigationDatas = navigationDatas;
         this.listener = listener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public NavigationAdapter(INavigation listener) {
 
-        @Nullable @BindView(R.id.tvNavigationName) TextView tvNavigationName;
-        @Nullable @BindView(R.id.ivNavigation) ImageView ivNavigation;
+        this.listener = listener;
+    }
 
-        @OnClick(R.id.ivNavigation) void onClickIcon()
-        {
-            if(ivNavigation != null)
-            listener.onIconClick(Integer.parseInt(ButterKnife.findById(ivNavigation,R.id.ivNavigation).getTag().toString()));
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @Nullable
+        @BindView(R.id.tvNavigationName)
+        TextView tvNavigationName;
+        @Nullable
+        @BindView(R.id.ivNavigation)
+        ImageView ivNavigation;
+
+        @OnClick(R.id.ivNavigation)
+        void onClickIcon() {
+            if (ivNavigation != null)
+                listener.onIconClick(Integer.parseInt(ButterKnife.findById(ivNavigation, R.id.ivNavigation).getTag().toString()));
         }
 
         private ViewHolder(View itemView) {
@@ -46,7 +55,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         }
 
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             listener.onViewClick(Integer.parseInt(view.getTag().toString()));
         }
     }
@@ -85,8 +94,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public void setSelected(int position)
-    {
+    public void setSelected(int position) {
         for (int i = 0; i < navigationDatas.size(); i++) {
             navigationDatas.get(i).setSelected(i == position);
         }

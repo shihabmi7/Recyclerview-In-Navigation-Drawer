@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NavigationDrawerWithRecyclerView.iml" filepath="$PROJECT_DIR$/NavigationDrawerWithRecyclerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NavigationDrawerWithRecyclerView.iml" filepath="$PROJECT_DIR$/NavigationDrawerWithRecyclerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\Android_Studio_Project\NavigationDrawerWithRecylerview\NavigationDrawerWithRecyclerView.iml" filepath="D:\Android_Studio_Project\NavigationDrawerWithRecylerview\NavigationDrawerWithRecyclerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NavigationDrawerWithRecylerview.iml" filepath="$PROJECT_DIR$/NavigationDrawerWithRecylerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
